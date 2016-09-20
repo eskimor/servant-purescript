@@ -166,7 +166,7 @@ genBuildHeader (HeaderArg arg) = let
   in
     align $ "{ field : " <> dquotes encodedArgName
       <+/> comma <+> "value :"
-      <+> "encodeURLPiece spOpts_'" <+> psVar argText
+      <+> "spOpts_.toURLPiece" <+> psVar argText
       </> "}"
 genBuildHeader (ReplaceHeaderArg _ _) = error "ReplaceHeaderArg - not yet implemented!"
 
