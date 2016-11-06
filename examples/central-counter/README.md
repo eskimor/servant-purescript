@@ -10,3 +10,6 @@
 * `stack exec central-counter`
 * Visit http://localhost:8081/index.html in multiple browser windows and click `+` and `-`.
 * Have fun!
+
+Note that this example is setup to work with the `master` branch of `purescript-servant`.
+If you're using `stack` or copying this as a template, make sure you're using the right version!
