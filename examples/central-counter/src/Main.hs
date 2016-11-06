@@ -27,6 +27,7 @@ import           Data.Monoid
 import           Data.Proxy
 import qualified Data.Set                           as Set
 import           Data.Text                          (Text)
+import qualified Data.Text                          as T
 import qualified Data.Text.Encoding                 as T
 import qualified Data.Text.IO                       as T
 import           Data.Typeable
@@ -70,7 +71,9 @@ putCounter action = do
     doAction (CounterSet val) _ = (val, val)
 
 counterHandlers :: ServerT CounterAPI (ReaderT CounterData Handler)
-counterHandlers = getCounter :<|> putCounter
+counterHandlers = getCounter :<|> putCounter :<|> foo
+  where
+    foo = pure . T.pack . show
 
 -- | We use servant's `enter` mechanism for handling Authentication ...
 --   We throw an error if no secret was provided or if it was invalid - so our

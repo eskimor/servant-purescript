@@ -56,6 +56,7 @@ type AppAPI = Header "AuthToken" AuthToken :> "counter" :> CounterAPI
 
 type CounterAPI = Subscribable :> Get '[JSON] Int
              :<|> ReqBody '[JSON] CounterAction :> Put '[JSON] Int
+             :<|> "query-param" :> QueryParam "foo" Int :> Get '[JSON] Text
 
 
 fullAPI :: Proxy FullAPI
