@@ -70,3 +70,26 @@ putCounter reqBody = do
                 }
   pure spReq
 
+getCounterQueryparam :: forall m. MonadReader (SPSettings_ SPParams_) m => Int
+                        -> m HttpRequest
+getCounterQueryparam foo = do
+  spOpts_' <- ask
+  let spOpts_ = case spOpts_' of SPSettings_ o -> o
+  let spParams_ = case spOpts_.params of SPParams_ ps_ -> ps_
+  let authToken = spParams_.authToken
+  let baseURL = spParams_.baseURL
+  let httpMethod = "GET"
+  let reqPath = Path ["counter" , "query-param"]
+  let reqHeaders =
+        [Tuple "AuthToken" (gDefaultToURLPiece authToken)]
+  let reqQuery =
+        subGenNormalQuery "foo" foo
+  let spReq = HttpRequest
+                { httpMethod: httpMethod
+                , httpPath: reqPath
+                , httpHeaders: reqHeaders
+                , httpQuery: reqQuery
+                , httpBody: ""
+                }
+  pure spReq
+

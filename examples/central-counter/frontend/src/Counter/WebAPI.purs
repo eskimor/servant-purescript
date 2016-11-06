@@ -67,3 +67,26 @@ putCounter reqBody = do
   affResp <- affjax affReq
   getResult affReq decodeJson affResp
   
+getCounterQueryparam :: forall eff m.
+                        (MonadReader (SPSettings_ SPParams_) m, MonadError AjaxError m, MonadAff ( ajax :: AJAX | eff) m)
+                        => Int -> m String
+getCounterQueryparam foo = do
+  spOpts_' <- ask
+  let spOpts_ = case spOpts_' of SPSettings_ o -> o
+  let spParams_ = case spOpts_.params of SPParams_ ps_ -> ps_
+  let authToken = spParams_.authToken
+  let baseURL = spParams_.baseURL
+  let httpMethod = "GET"
+  let reqUrl = baseURL <> "counter" <> "/" <> "query-param" 
+        <> "?" <> encodeQueryItem spOpts_' "foo" foo
+  let reqHeaders =
+        [{ field : "AuthToken" , value : encodeHeader spOpts_' authToken
+         }]
+  let affReq = defaultRequest
+                 { method = httpMethod
+                 , url = reqUrl
+                 , headers = defaultRequest.headers <> reqHeaders
+                 }
+  affResp <- affjax affReq
+  getResult affReq decodeJson affResp
+  

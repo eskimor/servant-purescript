@@ -47,6 +47,8 @@ data Action = Increment
             | Update Int
             | ReportError AjaxError
             | SubscriberLog String
+            | DisplayLength String
+            | QueryParam Int
             | Nop
 
 type State = {
@@ -54,6 +56,7 @@ type State = {
   , lastError :: Maybe AjaxError
   , settings :: MySettings
   , subscriberLog :: List String
+  , lenStr :: String
   }
 
 type MySettings = SPSettings_ SPParams_
@@ -71,6 +74,8 @@ type ServantModel =
 update :: Action -> State -> EffModel State Action (ajax :: AJAX)
 update Increment state = runEffectActions state [Update <$> putCounter (CounterAdd 1)]
 update Decrement state = runEffectActions state [Update <$> putCounter (CounterAdd (-1))]
+update (QueryParam i) state = runEffectActions state [DisplayLength <$> getCounterQueryparam i]
+update (DisplayLength str) state = { state : state { lenStr = str }, effects: []}
 update (Update val) state  = { state : state { counter = val }, effects : []}
 update (ReportError err ) state = { state : state { lastError = Just err}, effects : []}
 update (SubscriberLog msg) state = { state : state { subscriberLog = Cons msg state.subscriberLog}, effects : []}
@@ -145,7 +150,7 @@ main = do
                     , baseURL : "http://localhost:8081/"
                     }
                   }
-  let initState = { counter : 0, settings : settings, lastError : Nothing, subscriberLog : Nil }
+  let initState = { counter : 0, settings : settings, lastError : Nothing, subscriberLog : Nil, lenStr: ""}
   sub <- initSubscriber settings
   app <- coerceEffects <<< start $
     { initialState: initState
