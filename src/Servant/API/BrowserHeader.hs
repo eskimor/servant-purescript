@@ -1,4 +1,5 @@
 -- | A header which gets sent by the browser and is thus of no concern for the client consumer of the API.
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE DataKinds          #-}
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveFunctor      #-}
@@ -25,8 +26,13 @@ data BrowserHeader (sym :: Symbol) a
 type instance IsElem' e (BrowserHeader :> s) = IsElem e s
 
 instance HasLink sub => HasLink (BrowserHeader sym a :> sub) where
-    type MkLink (BrowserHeader sym a :> sub) = MkLink (Header sym a :> sub)
-    toLink _ = toLink (Proxy :: Proxy (Header sym a :> sub))
+#if MIN_VERSION_servant(0,14,0)
+  type MkLink (BrowserHeader sym a :> sub) b = MkLink (Header sym a :> sub) b
+  toLink toA Proxy = toLink toA (Proxy :: Proxy (Header sym a :> sub))
+#else
+  type MkLink (BrowserHeader sym a :> sub) = MkLink (Header sym a :> sub)
+  toLink _ = toLink (Proxy :: Proxy (Header sym a :> sub))
+#endif
 
 instance (KnownSymbol sym, FromHttpApiData a, HasServer sublayout context)
       => HasServer (BrowserHeader sym a :> sublayout) context where
