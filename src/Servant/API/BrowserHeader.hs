@@ -34,7 +34,11 @@ instance HasLink sub => HasLink (BrowserHeader sym a :> sub) where
   toLink _ = toLink (Proxy :: Proxy (Header sym a :> sub))
 #endif
 
-instance (KnownSymbol sym, FromHttpApiData a, HasServer sublayout context)
+instance ( KnownSymbol sym
+         , FromHttpApiData a
+         , HasServer sublayout context
+         , HasContextEntry (context .++ DefaultErrorFormatters) ErrorFormatters
+         )
       => HasServer (BrowserHeader sym a :> sublayout) context where
 
   type ServerT (BrowserHeader sym a :> sublayout) m = ServerT (Header sym a :> sublayout) m
