@@ -37,7 +37,7 @@ library
                      , lens
                      , mainland-pretty
                      , purescript-bridge >= 0.6
-                     , servant >= 0.14.1
+                     , servant >= 0.14.1 && <0.19
                      , servant-foreign
                      , servant-server
                      , servant-subscriber
