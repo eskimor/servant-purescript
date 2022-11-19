@@ -1,7 +1,7 @@
 Servant Purescript
 ==================
 
-[![Build Status](https://travis-ci.org/eskimor/servant-purescript.svg?branch=master)](https://travis-ci.org/eskimor/servant-purescript)
+[![Build status](https://github.com/eskimor/servant-purescript/actions/workflows/haskell-ci.yml/badge.svg)](https://github.com/eskimor/servant-purescript/actions/workflows/haskell-ci.yml)
 
 Generate typed PureScript query functions for your servant-api. Find an example, including
 the generated code in [examples/central-counter](https://github.com/eskimor/servant-purescript/tree/master/examples/central-counter).
