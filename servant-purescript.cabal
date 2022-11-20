@@ -15,7 +15,7 @@ cabal-version:       >=1.10
 
 extra-source-files: Readme.md
 
-tested-with: GHC==9.2.2, GHC==9.0.2, GHC==8.10.7, GHC==8.8.4
+tested-with: GHC==9.0.2, GHC==8.10.7, GHC==8.8.4
 
 library
   hs-source-dirs:      src
@@ -27,7 +27,7 @@ library
                      , Servant.API.BrowserHeader
 
 --  other-modules:       Main
-  build-depends:       base >= 4.7 && < 6.0
+  build-depends:       base >= 4.7 && < 4.16
                      , aeson >= 0.11.2
                      , bytestring
                      , containers
@@ -37,7 +37,7 @@ library
                      , lens
                      , mainland-pretty
                      , purescript-bridge >= 0.6
-                     , servant >= 0.14.1 && <0.19
+                     , servant >= 0.14.1
                      , servant-foreign
                      , servant-server
                      , servant-subscriber
