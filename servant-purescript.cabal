@@ -1,7 +1,7 @@
 name:                servant-purescript
 version:             0.9.0.4
-synopsis:            Generate PureScript accessor functions for you servant API
-description:         Please see README.md
+synopsis:            Generate PureScript accessor functions for your Servant API
+description:         Generate PureScript accessor functions for your Servant API; see README.md
 homepage:            https://github.com/eskimor/servant-purescript#readme
 license:             BSD3
 license-file:        LICENSE
