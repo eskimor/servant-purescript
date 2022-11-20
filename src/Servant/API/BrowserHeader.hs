@@ -9,6 +9,7 @@
 {-# LANGUAGE ScopedTypeVariables    #-}
 {-# LANGUAGE TypeFamilies           #-}
 {-# LANGUAGE TypeOperators          #-}
+{-# LANGUAGE TypeApplications       #-}
 {-# LANGUAGE UndecidableInstances          #-}
 
 module Servant.API.BrowserHeader where
@@ -44,6 +45,9 @@ instance ( KnownSymbol sym
   type ServerT (BrowserHeader sym a :> sublayout) m = ServerT (Header sym a :> sublayout) m
 
   route Proxy = route (Proxy :: Proxy (Header sym a :> sublayout))
+
+  hoistServerWithContext _ pc nt s =
+    hoistServerWithContext (Proxy @sublayout) pc nt . s
 
 
 -- Ignore BrowserHeader in HasForeign:
