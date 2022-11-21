@@ -1,7 +1,7 @@
 name:                servant-purescript
 version:             0.9.0.4
-synopsis:            Generate PureScript accessor functions for you servant API
-description:         Please see README.md
+synopsis:            Generate PureScript accessor functions for your Servant API
+description:         Generate PureScript accessor functions for your Servant API; see README.md
 homepage:            https://github.com/eskimor/servant-purescript#readme
 license:             BSD3
 license-file:        LICENSE
@@ -15,6 +15,8 @@ cabal-version:       >=1.10
 
 extra-source-files: Readme.md
 
+tested-with: GHC==9.0.2, GHC==8.10.7, GHC==8.8.4
+
 library
   hs-source-dirs:      src
   exposed-modules:     Servant.PureScript.Internal
@@ -25,7 +27,7 @@ library
                      , Servant.API.BrowserHeader
 
 --  other-modules:       Main
-  build-depends:       base >= 4.7 && < 6.0
+  build-depends:       base >= 4.7 && < 4.16
                      , aeson >= 0.11.2
                      , bytestring
                      , containers
@@ -35,7 +37,7 @@ library
                      , lens
                      , mainland-pretty
                      , purescript-bridge >= 0.6
-                     , servant >= 0.14.1
+                     , servant >= 0.18
                      , servant-foreign
                      , servant-server
                      , servant-subscriber
